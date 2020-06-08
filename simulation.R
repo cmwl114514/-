@@ -1,0 +1,27 @@
+simulation<-function(N=3*10^3,ProbA=c(0.1,0.7),ProbB=c(0.7,0.5),ProbC=c(0.4,0.6),ProbD=c(0.3,0.9),ProbX=0.6,ProbY=0.5){
+  simulation_data<-matrix(0,2,16)
+  colnames(simulation_data)<-c("0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111")
+  if(N==0){
+    return(simulation_data)
+  }
+  for(i in 1:N){
+    if(runif(1,0,1)<ProbX){
+      A<-ifelse(runif(1,0,1)<ProbA[1],1,0)
+      B<-ifelse(runif(1,0,1)<ProbB[1],1,0)
+      C<-ifelse(runif(1,0,1)<ProbC[1],1,0)
+      D<-ifelse(runif(1,0,1)<ProbD[1],1,0)
+    }
+    else{
+      A<-ifelse(runif(1,0,1)<ProbA[2],1,0)
+      B<-ifelse(runif(1,0,1)<ProbB[2],1,0)
+      C<-ifelse(runif(1,0,1)<ProbC[2],1,0)
+      D<-ifelse(runif(1,0,1)<ProbD[2],1,0)
+    }
+    Y<-ifelse(runif(1,0,1)<ProbY,1,2)
+    tmp<-8*D*(2-Y)+4*C+2*B+A+1
+    if(tmp!=1){
+      simulation_data[Y,tmp]<-simulation_data[Y,tmp]+1
+    }
+  }
+  return(simulation_data)
+}
